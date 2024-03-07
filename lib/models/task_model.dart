@@ -23,6 +23,7 @@ class TaskModel {
   }
 
   factory TaskModel.fromFireStore(Map<String, dynamic> json) => TaskModel(
+        id: json['id'],
         isDone: json['isDone'],
         title: json['title'],
         description: json['description'],

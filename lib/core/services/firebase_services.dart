@@ -75,7 +75,7 @@ class FirebaseService {
   }
 
   Stream<QuerySnapshot<TaskModel>> getStreamDataFromFireStore(
-      DateTime dateTime)  {
+      DateTime dateTime) {
     var collectionRef = getCollectionReference()
         .where('dateTime', isEqualTo: dateTime.millisecondsSinceEpoch);
     return collectionRef.snapshots();
@@ -88,11 +88,15 @@ class FirebaseService {
     return docRef.set(taskModel);
   }
 
-  updateTask() {
+  Future<void> updateTask(TaskModel taskModel) {
     var collectionRef = getCollectionReference();
+    var docRef = collectionRef.doc(taskModel.id);
+    return docRef.update(taskModel.toFireStore());
   }
 
-  deleteTask() {
+  Future<void> deleteTask(TaskModel taskModel) {
     var collectionRef = getCollectionReference();
+    var docRef = collectionRef.doc(taskModel.id);
+    return docRef.delete();
   }
 }
